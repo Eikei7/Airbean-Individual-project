@@ -28,19 +28,19 @@ export const validateMenu = (req, res, next) => {
   next();
 };
 
-export const validateAboutData = (req, res, next) => {
-  const { company, description, coffeeProduction } = req.body;
-  if (
-    typeof company !== "string" ||
-    typeof description !== "string" ||
-    typeof coffeeProduction !== "string"
-  ) {
-    return res
-      .status(400)
-      .json({ error: "Invalid about data. All fields must be strings." });
-  }
-  next();
-};
+// export const validateAboutData = (req, res, next) => {
+//   const { company, description, coffeeProduction } = req.body;
+//   if (
+//     typeof company !== "string" ||
+//     typeof description !== "string" ||
+//     typeof coffeeProduction !== "string"
+//   ) {
+//     return res
+//       .status(400)
+//       .json({ error: "Invalid about data. All fields must be strings." });
+//   }
+//   next();
+// };
 
 const validatePrice = (req, res, next) => {
   const { id } = req.body;
