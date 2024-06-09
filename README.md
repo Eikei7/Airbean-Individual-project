@@ -3,10 +3,11 @@
 | ------------- |:-------------:| -----:|
 | GET      |/ | Startsidan |
 | GET      |/about | Om oss |
-| GET      |/order      |  Visa Menyn |
 | POST | /cart      |    Lägg i varukorg |
 | GET | /cart      |    Se varukorg |
 | DEL | /cart/:id      |    Ta bort vara från varukorg |
+| POST | /menu      |    Admin: Lägg till produkt i menyn |
+| GET      |/order      |  Visa Menyn |
 | POST | /order      |    Beställ |
 | GET | /order/:orderid      |    Bekräftelse  med leveranstid|
 | GET | /account/order/orders     |    Orderhistorik |
