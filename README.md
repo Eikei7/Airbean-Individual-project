@@ -3,7 +3,7 @@
 | ------------- |:-------------:| -----:|
 | GET      |/ | Startsidan |
 | GET      |/about | Om oss |
-| GET      |/order      |  Visa Meny |
+| GET      |/order      |  Visa Menyn |
 | POST | /cart      |    Lägg i varukorg |
 | GET | /cart      |    Se varukorg |
 | DEL | /cart/:id      |    Ta bort vara från varukorg |
@@ -14,7 +14,7 @@
 | GET | /account/users/:userid     |    Se kontodetaljer|
 | POST | /account/login     |   Logga in|
 | GET | /account/status     |    Se loginstatus |
-| POST | /account/logout     |    Logga ut + rensa vaukorg |
+| POST | /account/logout     |    Logga ut + rensa varukorg |
 
 ## Gruppmedlemmar
 Ann Heijkenskjöld, Maya Arzapalo Björklund, Amanda Cyrus och Erik Karlsson
