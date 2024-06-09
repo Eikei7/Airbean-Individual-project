@@ -16,10 +16,6 @@ const getUserById = (userId, callback) => {
   userDb.findOne({ userId }, callback);
 }; // Funktionen används för att hämta en användare från databasen baserat på användar-ID.
 
-/*module.exports = {
-  createUser,
-  getUserById
-};*/
 const validateUser = (username, password, callback) => {
   userDb.findOne({ username: username, password: password }, callback);
 };
