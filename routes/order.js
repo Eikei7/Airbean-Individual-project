@@ -1,6 +1,6 @@
 import express from 'express'
 import nedb from "nedb-promise";
-import session from "express-session"; // for handling user sessions - login status
+import session from "express-session"; // For handling user sessions - login status
 import path, {dirname} from 'path'
 import { fileURLToPath } from "url";
 
@@ -13,9 +13,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const orders = new nedb({ filename: "models/orders.db", autoload: true });
 
+// Middleware to handle user sessions
 router.use(
   session({
-    secret: "this is the key",
+    secret: "12345",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }, // Set to true if using HTTPS
@@ -64,7 +65,7 @@ router.post("/", async (req, res) => {
     if (currentUserCart.length === 0) {
       return res.status(404).send("Cart is empty");
     }
-   
+    // 
     const estimatedDeliveryTime = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
 
     // Create an order
@@ -75,7 +76,7 @@ router.post("/", async (req, res) => {
     };
 
     // Insert the order into the orders database
-    await orders.insert(order); //på något sätt måste man få tillbaka orderid härifrån och skicka till användaren
+    await orders.insert(order);
     res.send(order)
     
     // Clear the cart for the current user
@@ -87,7 +88,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Bekräftelsesida med hur långt det är kvar tills ordern kommer
+// Confirmation page for an order
 router.get("/:orderId", async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -96,7 +97,7 @@ router.get("/:orderId", async (req, res) => {
     if (!order) {
       return res.status(404).send("Order not found");
     }
-
+    
     const items = order.items
       .map((item) => `<li>${item.title} (${item.price} kr)</li>`)
       .join("");

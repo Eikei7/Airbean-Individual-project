@@ -1,15 +1,10 @@
-import express from 'express'
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import express from 'express';
 
+const router = express.Router();
 
-const router = express.Router()
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
+// Example route
 router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-  });
+    res.send("Welcome to Airbean!"); // Sending a plain text response
+});
 
-  export default router;
+export default router;

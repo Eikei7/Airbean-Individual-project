@@ -1,17 +1,14 @@
 import menu from "../models/coffeeMenu.js";
+
 const validateUserCreation = (req, res, next) => {
-  //Funktionen validateUserCreation tar tre argument: req (request), res (response) och next.
+
   const { username } = req.body;
-  //Destructuring används för att plocka ut username från req.body.
 
   if (!username || typeof username !== "string" || username.trim() === "") {
-    // Funktionen kontrollerar om username är giltigt (inte tomt, är en sträng, och inte bara mellanslag).
     return res.status(400).json({ error: "Invalid username" });
-    // Om username inte är giltigt: returnerar ett felmeddelande.
   }
-
   next();
-  // Om username är giltigt: går vidare till nästa middleware eller funktion med next().
+
 };
 
 export const validateMenu = (req, res, next) => {
@@ -28,20 +25,6 @@ export const validateMenu = (req, res, next) => {
   next();
 };
 
-// export const validateAboutData = (req, res, next) => {
-//   const { company, description, coffeeProduction } = req.body;
-//   if (
-//     typeof company !== "string" ||
-//     typeof description !== "string" ||
-//     typeof coffeeProduction !== "string"
-//   ) {
-//     return res
-//       .status(400)
-//       .json({ error: "Invalid about data. All fields must be strings." });
-//   }
-//   next();
-// };
-
 const validatePrice = (req, res, next) => {
   const { id } = req.body;
   const selectedProduct = menu.find((product) => product.id === id);
@@ -56,4 +39,24 @@ const validatePrice = (req, res, next) => {
 
   next();
 };
+
+export const validateProduct = (req, res, next) => {
+  const allowedKeys = ['id', 'title', 'desc', 'price'];
+  const productKeys = Object.keys(req.body);
+
+  // Check for unexpected keys
+  const unexpectedKeys = productKeys.filter(key => !allowedKeys.includes(key));
+  if (unexpectedKeys.length > 0) {
+    return res.status(400).send(`Unexpected properties: ${unexpectedKeys.join(', ')}`);
+  }
+
+  // Validate required keys and types
+  const { id, title, desc, price } = req.body;
+  if (!id || !title || !desc || typeof price !== 'number') {
+    return res.status(400).send('Invalid input data');
+  }
+
+  next(); // Proceed to the next middleware or route handler
+};
+
 export { validateUserCreation, validatePrice };
