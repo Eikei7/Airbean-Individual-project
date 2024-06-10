@@ -5,7 +5,7 @@ export const addProduct = (product, callback) => {
 };
 
 export const getProductById = (id, callback) => {
-  db.findOne({ id }, callback);
+  db.findOne({ id: parseInt(id) }, callback);
 };
 
 export const updateProduct = (id, updates, callback) => {
