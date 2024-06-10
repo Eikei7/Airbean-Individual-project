@@ -1,4 +1,5 @@
 ﻿# Airbean Individual project
+ ## User requests
 | Request       | Route           | Result |
 | ------------- |:-------------:| -----:|
 | GET      |/ | Start |
@@ -16,6 +17,8 @@
 | GET | /account/status     |    See if user is logged in or logged out |
 | POST | /account/logout     |    Log out and clear cart |
 
+## Admin requests:
 | Request       | Route           | Result |
-| ------------- |:-------------:| -----:|
-| POST | /menu      |    Admin: Add product to menu |
+| ----------------- |:-----------------:| ----------:|
+| POST | /menu      |    Add product to menu |
+| DELETE | /menu/:id      |    Remove product from menu |
