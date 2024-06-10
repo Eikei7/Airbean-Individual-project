@@ -3,9 +3,8 @@ import nedb from "nedb-promise";
 import session from "express-session"; // For handling user sessions - login status
 import path, {dirname} from 'path'
 import { fileURLToPath } from "url";
-
+import { getAllProducts } from '../models/productModel.js';
 import { validateMenu, validatePrice } from '../middlewares/validation.js';
-import menu from "../models/coffeeMenu.js";
 import { cart } from './cart.js'
 
 const router = express.Router()
@@ -31,28 +30,22 @@ router.use((req, res, next) => {
   next();
 });
 
-
+// Get all products from the menu
 router.get("/", validateMenu, (req, res) => {
-    const coffeeMenu = menu.map((item) => ({
+  getAllProducts((err, products) => {
+    if (err) {
+      return res.status(500).send('Failed to retrieve products');
+    }
+
+    const coffeeMenu = products.map((item) => ({
       title: item.title,
       price: item.price,
       id: item.id,
     }));
-    
-    const items = coffeeMenu.map(item => `
-    <div style="margin-bottom: 20px;">
-      <p style="margin: 0;">ID: ${item.id}</p>
-      <p style="margin: 0;">Kaffe: ${item.title}</p>
-      <p style="margin: 0;">Pris: ${item.price} kr</p>
-    </div>
-  `).join('<br>');
-  
-  res.send(`
-    <div>
-      ${items}
-    </div>
-      `);
+
+    res.status(200).json(coffeeMenu);
   });
+});
 
   // Place an order and store in order history
 router.post("/", async (req, res) => {

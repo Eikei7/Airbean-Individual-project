@@ -1,61 +1,71 @@
 import express from 'express';
-import menu from '../models/coffeeMenu.js';
 import { validateProduct } from '../middlewares/validation.js';
+import { addProduct, getProductById, updateProduct, removeProduct, getAllProducts } from '../models/productModel.js';
 
 const router = express.Router();
+
+// Helper function to remove _id field
+const removeIdField = (products) => {
+  return products.map(product => {
+    const { _id, ...rest } = product;
+    return rest;
+  });
+};
 
 // Add a new product to the menu
 router.post('/menu', validateProduct, (req, res) => {
   const { id, title, desc, price } = req.body;
 
-  // Check if the id is unique
-  const existingProduct = menu.find(product => product.id === id);
-  if (existingProduct) {
-    return res.status(400).send('Product with this ID already exists');
-  }
-
   // Create the new product with the current date and time
   const newProduct = { id, title, desc, price, createdAt: new Date().toLocaleDateString() };
 
-  // Add the new product to the menu
-  menu.push(newProduct);
-
-  // Send a response with the updated menu
-  res.status(201).json(menu);
+  addProduct(newProduct, (err, product) => {
+    if (err) {
+      return res.status(500).send('Failed to add product');
+    }
+    getAllProducts((err, products) => {
+      if (err) {
+        return res.status(500).send('Failed to retrieve products');
+      }
+      res.status(201).json(removeIdField(products));
+    });
+  });
 });
 
 // Update an existing product in the menu
 router.post('/menu/update', validateProduct, (req, res) => {
   const { id, title, desc, price } = req.body;
 
-  // Find the product by id
-  const productIndex = menu.findIndex(product => product.id === id);
-  if (productIndex === -1) {
-    return res.status(404).send('Product not found');
-  }
+  getProductById(id, (err, product) => {
+    if (err || !product) {
+      return res.status(404).send('Product not found');
+    }
 
-  // Update the product details
-  menu[productIndex] = { ...menu[productIndex], title, desc, price, modifiedAt: new Date().toLocaleDateString() };
-
-  // Send a response with the updated product
-  res.status(200).json(menu[productIndex]);
+    const updates = { title, desc, price, modifiedAt: new Date().toLocaleDateString() };
+    updateProduct(id, updates, (err, numAffected) => {
+      if (err) {
+        return res.status(500).send('Failed to update product');
+      }
+      res.status(200).json({ ...product, ...updates, _id: undefined });
+    });
+  });
 });
 
 // Remove a product from the menu
 router.delete('/menu/:id', (req, res) => {
   const { id } = req.params;
 
-  // Find the index of the product by id
-  const productIndex = menu.findIndex(product => product.id === id);
-  if (productIndex === -1) {
-    return res.status(404).send('Product not found');
-  }
-
-  // Remove the product from the array
-  menu.splice(productIndex, 1);
-
-  // Send a response with the updated menu
-  res.status(200).json(menu);
+  removeProduct(id, (err, numRemoved) => {
+    if (err || numRemoved === 0) {
+      return res.status(404).send('Product not found');
+    }
+    getAllProducts((err, products) => {
+      if (err) {
+        return res.status(500).send('Failed to retrieve products');
+      }
+      res.status(200).json(removeIdField(products));
+    });
+  });
 });
 
 export default router;

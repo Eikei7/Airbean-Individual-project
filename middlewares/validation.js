@@ -10,7 +10,7 @@ const validateUserCreation = (req, res, next) => {
   next();
 
 };
-
+// Validate the menu data
 export const validateMenu = (req, res, next) => {
   const isValid = menu.every((item) => {
     return typeof item.title === "string" && typeof item.price === "number";
@@ -24,7 +24,7 @@ export const validateMenu = (req, res, next) => {
   }
   next();
 };
-
+// Validate the price of a product
 const validatePrice = (req, res, next) => {
   const { id } = req.body;
   const selectedProduct = menu.find((product) => product.id === id);
