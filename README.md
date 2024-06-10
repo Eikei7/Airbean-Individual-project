@@ -1,18 +1,21 @@
 ﻿# Airbean Individual project
-| Anrop       | Route           | Resultat |
+| Request       | Route           | Result |
 | ------------- |:-------------:| -----:|
-| GET      |/ | Startsidan |
-| GET      |/about | Om oss |
-| POST | /cart      |    Lägg i varukorg |
-| GET | /cart      |    Se varukorg |
-| DEL | /cart/:id      |    Ta bort vara från varukorg |
-| POST | /menu      |    Admin: Lägg till produkt i menyn |
-| GET      |/order      |  Visa Menyn |
-| POST | /order      |    Beställ |
-| GET | /order/:orderid      |    Bekräftelse  med leveranstid|
-| GET | /account/order/orders     |    Orderhistorik |
-| POST | /account/register     |    Skapa konto |
-| GET | /account/users/:userid     |    Se kontodetaljer|
-| POST | /account/login     |   Logga in|
-| GET | /account/status     |    Se loginstatus |
-| POST | /account/logout     |    Logga ut + rensa varukorg |
+| GET      |/ | Start |
+| GET      |/about | About the company |
+| POST | /cart      |    Add to cart |
+| GET | /cart      |    View cart |
+| DEL | /cart/:id      |    Remove product from cart |
+| GET      |/order      |  View menu |
+| POST | /order      |    Order |
+| GET | /order/:orderid      |    Order confirmation and estimated delivery time|
+| GET | /account/order/orders     |    Order history |
+| POST | /account/register     |    Create account |
+| GET | /account/users/:userid     |    View account details|
+| POST | /account/login     |   Log in|
+| GET | /account/status     |    See if user is logged in or logged out |
+| POST | /account/logout     |    Log out and clear cart |
+
+| Request       | Route           | Result |
+| ------------- |:-------------:| -----:|
+| POST | /menu      |    Admin: Add product to menu |
