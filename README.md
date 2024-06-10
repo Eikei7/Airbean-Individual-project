@@ -1,5 +1,5 @@
 ﻿# Airbean Individual project
- ## User requests
+ ## User requests:
 | Request       | Route           | Result |
 | ------------- |:-------------:| -----:|
 | GET      |/ | Start |
