@@ -10,7 +10,7 @@ import { cart } from './cart.js';
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const orders = new nedb({ filename: 'models/orders.db', autoload: true });
+const orders = new nedb({ filename: path.join(__dirname, '../models/orders.db'), autoload: true });
 
 // Middleware to handle user sessions
 router.use(
@@ -31,20 +31,22 @@ router.use((req, res, next) => {
 });
 
 // Get all products from the menu
-router.get('/', validateMenu, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const products = await getAllProducts();
-    const coffeeMenu = products.map((item) => ({
-      title: item.title,
-      price: item.price,
-      id: item.id,
-    }));
+    const products = getAllProducts();
+    // const coffeeMenu = products.map((item) => ({
+    //   title: item.title,
+    //   price: item.price,
+    //   id: item.id,
+    // }));
     res.status(200).json(coffeeMenu);
   } catch (err) {
     console.error('Failed to retrieve products:', err);
     res.status(500).send('Failed to retrieve products');
   }
 });
+
+console.log(getAllProducts());
 
 // Place an order and store in order history
 router.post('/', validatePrice, async (req, res) => {

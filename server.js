@@ -12,7 +12,7 @@ const __dirname = dirname(__filename);
 //Middlewares
 app.use(express.json());
 app.use("/", router);
-app.use("/", menuRouter);
+app.use("/order", menuRouter);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(PORT, () => {

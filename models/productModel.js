@@ -19,3 +19,12 @@ export const removeProduct = (id, callback) => {
 export const getAllProducts = (callback) => {
   db.find({}, callback);
 };
+
+// Proper way to use getAllProducts
+getAllProducts((err, products) => {
+  if (err) {
+    console.error("Error fetching products:", err);
+  } else {
+    console.log(products);
+  }
+});

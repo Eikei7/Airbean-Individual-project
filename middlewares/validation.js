@@ -1,4 +1,5 @@
 import menu from "../models/coffeeMenu.js";
+import { getAllProducts } from "../models/productModel.js";
 
 const validateUserCreation = (req, res, next) => {
 
@@ -11,15 +12,26 @@ const validateUserCreation = (req, res, next) => {
 
 };
 // Validate the menu data
-export const validateMenu = (req, res, next) => {
-  const isValid = menu.every((item) => {
-    return typeof item.title === "string" && typeof item.price === "number";
-  });
+export const validateMenu = async (req, res, next) => {
+  try {
+    const products = await getAllProducts();
 
-  if (!isValid) {
-    return res.status(400).json({
-      error:
-        "Invalid menu data. Each item must have a title (string) and a price (number).",
+    const isValid = products.every((item) => {
+      return typeof item.title === "string" && typeof item.price === "number";
+    });
+
+    if (!isValid) {
+      return res.status(400).json({
+        error:
+          "Invalid menu data. Each item must have a title (string) and a price (number).",
+      });
+    }
+
+    next();
+  } catch (error) {
+    console.error("Error validating menu:", error);
+    res.status(500).json({
+      error: "An error occurred while validating the menu.",
     });
   }
   next();
