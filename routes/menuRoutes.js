@@ -1,10 +1,10 @@
 import express from 'express';
-import menu from '../models/coffeeMenu.js'; // Adjust the path based on your project structure
+import menu from '../models/coffeeMenu.js'; //
 
 const router = express.Router();
 
 // Add a new product to the menu
-router.post('/menu', (req, res) => {
+router.post('/addproduct', (req, res) => {
   const { id, title, desc, price } = req.body;
 
   // Input validation

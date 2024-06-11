@@ -110,7 +110,7 @@ async function deleteItem(id) {
         return res.status(404).json({ message: "Item not found in cart" });
       }
   
-      res.json({ message: "Deleted coffee" });
+      res.json({ message: "Product removed from cart" });
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");
