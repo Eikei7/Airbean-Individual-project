@@ -4,20 +4,30 @@ import { addProduct, getProductById, updateProduct, removeProduct, getAllProduct
 const router = express.Router();
 
 // Add a new product to the menu
-router.post('/menu/add', (req, res) => {
+router.post('/add', (req, res) => {
   const { id, title, desc, price } = req.body;
 
   // Create the new product with the current date and time
   const newProduct = { id, title, desc, price, createdAt: new Date().toLocaleDateString() };
 
+  console.log('Adding new product:', newProduct);
+
   addProduct(newProduct, (err, product) => {
     if (err) {
+      console.error('Failed to add product:', err);
       return res.status(500).send('Failed to add product');
     }
+
+    console.log('Product added successfully:', product);
+
     getAllProducts((err, products) => {
       if (err) {
+        console.error('Failed to retrieve products:', err);
         return res.status(500).send('Failed to retrieve products');
       }
+
+      console.log('Retrieved all products:', products);
+
       res.status(201).json(products);
     });
   });

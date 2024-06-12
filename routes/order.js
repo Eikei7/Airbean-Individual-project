@@ -3,7 +3,6 @@ import nedb from "nedb-promise";
 import session from "express-session"; // for handling user sessions - login status
 import path, {dirname} from 'path'
 import { fileURLToPath } from "url";
-
 import { validateMenu, validatePrice } from '../middlewares/validation.js';
 import menu from "../models/coffeeMenu.js";
 import { cart } from './cart.js'

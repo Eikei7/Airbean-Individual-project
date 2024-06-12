@@ -8,6 +8,7 @@ import aboutRouter from "./about.js";
 import orderRouter from './order.js'
 import cartRouter from './cart.js'
 import authRouter from './auth.js'
+import menuRouter from './menuRoutes.js'
 
 import sessionMiddleware from "../middlewares/session.js";
 
@@ -37,6 +38,8 @@ router.use('/about', aboutRouter)
 router.use('/order', orderRouter)
 router.use('/cart', cartRouter)
 router.use('/account', authRouter)
+router.use('/menu', menuRouter)
+
 
 
 export default router;

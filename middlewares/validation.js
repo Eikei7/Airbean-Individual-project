@@ -1,4 +1,5 @@
 import menu from "../models/coffeeMenu.js";
+
 const validateUserCreation = (req, res, next) => {
   //Funktionen validateUserCreation tar tre argument: req (request), res (response) och next.
   const { username } = req.body;
