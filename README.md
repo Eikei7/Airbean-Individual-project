@@ -10,7 +10,7 @@
 | GET      |/order      |  View menu |
 | POST | /order      |    Order |
 | GET | /order/:orderid      |    Order confirmation and estimated delivery time|
-| GET | /account/order/orders     |    Order history |
+| GET | /account/orders     |    Order history |
 | POST | /account/register     |    Create account |
 | GET | /account/users/:userid     |    View account details|
 | POST | /account/login     |   Log in|
