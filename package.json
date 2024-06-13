@@ -16,7 +16,9 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "joi": "^17.13.1",
+    "jsonwebtoken": "^9.0.2",
     "nedb-promise": "^2.0.1",
+    "nedb-promises": "^6.2.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

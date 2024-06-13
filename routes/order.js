@@ -10,7 +10,8 @@ import { cart } from './cart.js'
 const router = express.Router()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const orders = new nedb({ filename: "models/orders.db", autoload: true });
+const orders = new nedb({ filename: "/database/orders.db", autoload: true });
+const orders2 = nedb({ filename: "/database/menu.db", autoload: true });
 
 router.use(
   session({
@@ -31,7 +32,7 @@ router.use((req, res, next) => {
 
 
 router.get("/", validateMenu, (req, res) => {
-    const coffeeMenu = menu.map((item) => ({
+    const coffeeMenu = orders2.map((item) => ({
       title: item.title,
       price: item.price,
       id: item.id,

@@ -1,0 +1,10 @@
+{"title":"Cortado","desc":"En cortado med lika delar espresso och varm mjölk.","price":33,"_id":"0Gu3mPAbONk1hy4P"}
+{"title":"Flat White","desc":"En platt vit med silkeslen mikroskum och stark espresso.","price":46,"_id":"3IBqddqDtbAtIi2E"}
+{"title":"Mocha","desc":"En söt mocha med choklad och espresso.","price":55,"_id":"6ymMjHWMpLGChmJ6"}
+{"title":"Espresso","desc":"En stark och aromatisk enkel espresso.","price":25,"_id":"QnMf8p1P9ZF9Oerm"}
+{"title":"Americano","desc":"En espresso utspädd med varmt vatten.","price":35,"_id":"SjwGh9EVaYWtIzs7"}
+{"title":"Bryggkaffe","desc":"Bryggd på månadens bönor.","price":39,"_id":"XxbJYtuWvSY6xPu0"}
+{"title":"Latte","desc":"En len latte med perfekt balanserad mjölk och espresso.","price":49,"_id":"ZVjipnljyz05sa1O"}
+{"title":"Macchiato","desc":"En macchiato med en skvätt mjölk.","price":30,"_id":"dy1JqGCeAYWaJqri"}
+{"title":"Cold Brew","desc":"Kallbryggt kaffe för en uppfriskande smakupplevelse.","price":42,"_id":"lN2tmDgmhBl1Mc6k"}
+{"title":"Cappuccino","desc":"En krämig cappuccino med skummad mjölk.","price":45,"_id":"nG7UZ7wTTM0wm64Q"}
