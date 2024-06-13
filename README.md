@@ -10,7 +10,7 @@
 | GET      |/order      |  Visa Menyn |
 | POST | /order      |    Beställ |
 | GET | /order/:orderid      |    Bekräftelse  med leveranstid|
-| GET | /account/order/orders     |    Orderhistorik |
+| GET | /account/order/     |    Orderhistorik |
 | POST | /account/register     |    Skapa konto |
 | GET | /account/users/:userid     |    Se kontodetaljer|
 | POST | /account/login     |   Logga in|
