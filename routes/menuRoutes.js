@@ -1,27 +1,18 @@
 import express from 'express';
-import { addProduct, updateProduct, deleteProduct, removeProduct } from '../models/productModel.js';
+import { addProduct, updateProduct, deleteProduct } from '../models/productModel.js';
 const router = express.Router();
 
 // Add a new product to the menu
-router.post('/add', (req, res) => {
-  const { id, title, desc, price } = req.body;
+router.post("/", async (req, res) => {
+  try{
+    const newMenuItem = await addProduct(req.body)
 
-  // Create the new product with the current date and time
-  const newProduct = { id, title, desc, price, createdAt: new Date().toLocaleDateString() };
+    res.json({message: "New menu item added successfully", newMenuItem})
 
-  console.log('Adding new product:', newProduct);
-
-  addProduct(newProduct, (err, product) => {
-    if (err) {
-      console.error('Failed to add product:', err);
-      return res.status(500).send('Failed to add product');
-    }
-
-    console.log('Product added successfully:', product);
-
-    res.status(201).json(product);
-  });
-});
+  }catch(error){
+    res.status(500).json({message: "Error adding new menu item", error: error.message})
+  }
+})
 
 // Update an existing product in the menu
 router.put('/update', updateProduct);
@@ -30,17 +21,17 @@ router.put('/update', updateProduct);
 
 router.delete('/delete/:id', deleteProduct);
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
+// router.delete('/:id', (req, res) => {
+//   const { id } = req.params;
 
-  removeProduct(id, (err, numRemoved) => {
-    if (err || numRemoved === 0) {
-      return res.status(404).send('Product not found');
-    }
+//   removeProduct(id, (err, numRemoved) => {
+//     if (err || numRemoved === 0) {
+//       return res.status(404).send('Product not found');
+//     }
 
-      res.status(200).json(products);
-    });
-  });
+//       res.status(200).json(products);
+//     });
+//   });
 
 
 export default router;

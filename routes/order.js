@@ -6,12 +6,13 @@ import { fileURLToPath } from "url";
 import { validateMenu, validatePrice } from '../middlewares/validation.js';
 import menu from "../models/coffeeMenu.js";
 import { cart } from './cart.js'
+import db from '../database/db.js';
 
 const router = express.Router()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const orders = new nedb({ filename: "/database/orders.db", autoload: true });
-const orders2 = nedb({ filename: "/database/menu.db", autoload: true });
+const products = nedb({ filename: "/database/menu.db", autoload: true });
 
 router.use(
   session({
@@ -32,7 +33,7 @@ router.use((req, res, next) => {
 
 
 router.get("/", validateMenu, (req, res) => {
-    const coffeeMenu = orders2.map((item) => ({
+    const coffeeMenu = products.map((item) => ({
       title: item.title,
       price: item.price,
       id: item.id,
