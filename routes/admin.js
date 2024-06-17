@@ -7,7 +7,7 @@ const router = Router()
 //POST log in admin user
 router.post("/", async (req, res) => {
     try{
-      const admin = await logInAdmin(req.body.email, req.body.password)
+      const admin = await logInAdmin(req.body.username, req.body.password)
   
       res.json({message: "Successfully logged in admin", admin})
   

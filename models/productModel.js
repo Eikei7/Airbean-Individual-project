@@ -1,7 +1,7 @@
 import db from '../database/db.js';
 
 // Function for menu
-export const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
   try {
     const allProducts = await db.menu.find({});
     res.send(allProducts);
@@ -12,7 +12,7 @@ export const getAllProducts = async (req, res) => {
 
 
 //Add new menu item in menu
-export const addProduct = async (Item) => {
+const AddMenuItem = async (Item) => {
   try{
 
     //Check if the req body has valid keys
@@ -36,7 +36,7 @@ export const addProduct = async (Item) => {
 }
 
 //Update menu item in menu
-export const updateProduct = async (id, updatedProduct) => {
+const UpdateMenuItem = async (id, updatedMenuItem) => {
     try{
       //Check if the item with specific id exist.
       const menuItem = await db.menu.findOne({_id: id})
@@ -60,23 +60,25 @@ export const updateProduct = async (id, updatedProduct) => {
 }
 
 //Delete menu item in menu
-export const deleteProduct = async (id) => {
+const DeleteMenuItem = async (id) => {
 
   try{
     console.log("Checking id", id)
 
-    const productToDelete = await db.menu.findOne({_id: id})
-    console.log("Full product to delete", productToDelete)
+    const itemToDelete = await db.menu.findOne({_id: id})
+    console.log("Full item to delete", itemToDelete)
 
-    if(!productToDelete){
-      throw new Error("Product does not exist")
+    if(!itemToDelete){
+      throw new Error("Item does not exist")
     }
 
-    const deleteProduct = await db.menu.remove({_id: id})
-    console.log("Product deleted", deleteProduct)
+    const deleteItem = await db.menu.remove({_id: id})
+    console.log("Item deleted", deleteItem)
   }catch(error){
-    console.error("Error deleting product", error)
+    console.error("Error deleting item", error)
     throw error
   }
 
 }
+
+export { getAllProducts, AddMenuItem, UpdateMenuItem, DeleteMenuItem };

@@ -15,33 +15,6 @@ const validateUserCreation = (req, res, next) => {
   // Om username är giltigt: går vidare till nästa middleware eller funktion med next().
 };
 
-export const validateMenu = (req, res, next) => {
-  const isValid = menu.every((item) => {
-    return typeof item.title === "string" && typeof item.price === "number";
-  });
-
-  if (!isValid) {
-    return res.status(400).json({
-      error:
-        "Invalid menu data. Each item must have a title (string) and a price (number).",
-    });
-  }
-  next();
-};
-
-// export const validateAboutData = (req, res, next) => {
-//   const { company, description, coffeeProduction } = req.body;
-//   if (
-//     typeof company !== "string" ||
-//     typeof description !== "string" ||
-//     typeof coffeeProduction !== "string"
-//   ) {
-//     return res
-//       .status(400)
-//       .json({ error: "Invalid about data. All fields must be strings." });
-//   }
-//   next();
-// };
 
 const validatePrice = (req, res, next) => {
   const { id } = req.body;

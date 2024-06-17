@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = 'some-secret-key';
 
-const logInAdmin = async (adminEmail, adminPassword) => {
+const logInAdmin = async (adminUsername, adminPassword) => {
     try {
-        const adminUser = await db.admin.findOne({ email: adminEmail, password: adminPassword });
+        const adminUser = await db.admin.findOne({ username: adminUsername, password: adminPassword });
         if (!adminUser) {
             throw new Error("Admin user does not exist");
         }

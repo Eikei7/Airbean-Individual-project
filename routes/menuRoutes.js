@@ -1,11 +1,15 @@
-import express from 'express';
-import { addProduct, updateProduct, deleteProduct } from '../models/productModel.js';
-const router = express.Router();
+import { Router } from "express";
+import { getAllProducts, AddMenuItem, UpdateMenuItem, DeleteMenuItem } from "../models/productModel.js";
+import authenticateAdmin from "../middlewares/authAdmin.js";
 
-// Add a new product to the menu
-router.post("/", async (req, res) => {
+const router = Router();
+
+router.get("/menu", getAllProducts)
+
+//POST new menu item
+router.post("/", authenticateAdmin, async (req, res) => {
   try{
-    const newMenuItem = await addProduct(req.body)
+    const newMenuItem = await AddMenuItem(req.body)
 
     res.json({message: "New menu item added successfully", newMenuItem})
 
@@ -14,24 +18,25 @@ router.post("/", async (req, res) => {
   }
 })
 
-// Update an existing product in the menu
-router.put('/update', updateProduct);
+//PUT menu item
 
-// Remove a product from the menu
+router.put("/:id", authenticateAdmin, async (req, res) =>{
+  try{
+    const updateItem = await UpdateMenuItem(req.params.id, req.body)
+    res.json({message: "Menu item updated successfully", updateItem})
+  }catch(error){
+    res.status(404).json({message: "Error updating menu item", error: error.message})
+  }
+})
 
-router.delete('/delete/:id', deleteProduct);
-
-// router.delete('/:id', (req, res) => {
-//   const { id } = req.params;
-
-//   removeProduct(id, (err, numRemoved) => {
-//     if (err || numRemoved === 0) {
-//       return res.status(404).send('Product not found');
-//     }
-
-//       res.status(200).json(products);
-//     });
-//   });
-
+//DELETE menu item
+router.delete("/:id", authenticateAdmin, async (req, res) =>{
+  try{
+    const deleteItem = await DeleteMenuItem(req.params.id)
+    res.json({message: "Item deleted successfully", deleteItem})
+  }catch(error){
+    res.status(404).json({message: "Error deleting item", error: error.message})
+  }
+})
 
 export default router;
