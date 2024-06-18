@@ -1,6 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'default-secret-key'; // Use environment variables for secrets
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET is not defined in the environment variables');
+}
 
 const authenticateAdmin = (req, res, next) => { // Middleware to authenticate admin
   const authHeader = req.headers.authorization;
@@ -12,7 +17,11 @@ const authenticateAdmin = (req, res, next) => { // Middleware to authenticate ad
 
   jwt.verify(token, JWT_SECRET, (err, decoded) => { // Verify token
     if (err) {
-      return res.status(401).json({ success: false, message: 'Invalid token' }); // Invalid token
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ success: false, message: 'Token has expired' }); // Token expired
+      } else {
+        return res.status(401).json({ success: false, message: 'Invalid token' }); // Invalid token
+      }
     }
 
     if (decoded.role !== 'admin') {
