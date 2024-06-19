@@ -1,19 +1,18 @@
-import { Router } from "express";
-import { logInAdmin } from "../models/admin.js";
+import { Router } from 'express';
+import { logInAdmin } from '../models/admin.js';
 
-const router = Router()
+const router = Router();
 
+// POST log in admin user
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
 
-//POST log in admin user
-router.post("/", async (req, res) => {
-    try{
-      const admin = await logInAdmin(req.body.username, req.body.password)
-  
-      res.json({message: "Successfully logged in admin", admin})
-  
-    }catch(error){
-      res.status(404).json({message: "Error logging in Admin", error: error.message})
-    }
-  })
+  try {
+    const { token } = await logInAdmin(username, password);
+    res.status(200).json({ token });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid credentials' });
+  }
+});
 
-  export default router;
+export default router;

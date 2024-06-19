@@ -1,42 +1,60 @@
-import { Router } from "express";
-import { getAllProducts, AddMenuItem, UpdateMenuItem, DeleteMenuItem } from "../models/productModel.js";
-import authenticateAdmin from "../middlewares/authAdmin.js";
+import { Router } from 'express';
+import isAdmin from '../middlewares/authAdmin.js';
+import db from '../database/db.js';
+import { validateProduct } from '../middlewares/validation.js';
 
 const router = Router();
 
-router.get("/menu", getAllProducts)
+// POST Add new menu item
+router.post('/', isAdmin, (req, res) => {
+  const product = req.body;
 
-//POST new menu item
-router.post("/", authenticateAdmin, async (req, res) => {
-  try{
-    const newMenuItem = await AddMenuItem(req.body)
-
-    res.json({message: "New menu item added successfully", newMenuItem})
-
-  }catch(error){
-    res.status(500).json({message: "Error adding new menu item", error: error.message})
+  if (!validateProduct(product)) {
+    return res.status(400).json({ message: 'Invalid product properties' });
   }
-})
 
-//PUT menu item
+  product.createdAt = new Date();
 
-router.put("/:id", authenticateAdmin, async (req, res) =>{
-  try{
-    const updateItem = await UpdateMenuItem(req.params.id, req.body)
-    res.json({message: "Menu item updated successfully", updateItem})
-  }catch(error){
-    res.status(404).json({message: "Error updating menu item", error: error.message})
+  db.menu.insert(product)
+    .then(newDoc => res.status(201).json(newDoc))
+    .catch(err => res.status(500).json({ message: 'Failed to add product' }));
+});
+
+// PUT Modify menu item
+router.put('/:id', isAdmin, (req, res) => {
+  const productId = req.params.id;
+  const updatedProduct = req.body;
+
+  if (!validateProduct(updatedProduct)) {
+    return res.status(400).json({ message: 'Invalid product properties' });
   }
-})
 
-//DELETE menu item
-router.delete("/:id", authenticateAdmin, async (req, res) =>{
-  try{
-    const deleteItem = await DeleteMenuItem(req.params.id)
-    res.json({message: "Item deleted successfully", deleteItem})
-  }catch(error){
-    res.status(404).json({message: "Error deleting item", error: error.message})
-  }
-})
+  updatedProduct.modifiedAt = new Date();
+
+  db.menu.update({ id: productId }, { $set: updatedProduct })
+    .then(numReplaced => {
+      if (numReplaced === 0) {
+        res.status(404).json({ message: 'Product not found' });
+      } else {
+        res.status(200).json({ message: 'Product modified', numReplaced });
+      }
+    })
+    .catch(err => res.status(500).json({ message: 'Failed to modify product' }));
+});
+
+// DELETE menu item
+router.delete('/:id', isAdmin, (req, res) => {
+  const productId = req.params.id;
+
+  db.menu.remove({ id: productId })
+    .then(numRemoved => {
+      if (numRemoved === 0) {
+        res.status(404).json({ message: 'Product not found' });
+      } else {
+        res.status(200).json({ message: 'Product deleted', numRemoved });
+      }
+    })
+    .catch(err => res.status(500).json({ message: 'Failed to delete product' }));
+});
 
 export default router;

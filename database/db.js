@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const database_names = [ "menu", "orders", "admin", "campaigns"];
+const database_names = [ "menu", "admin", "orders", "campaigns"];
 const db = {};
 
 database_names.forEach((name) => {

@@ -1,24 +1,20 @@
-import menu from "../models/coffeeMenu.js";
+import db from "../database/db.js";
 
-const validateUserCreation = (req, res, next) => {
-  //Funktionen validateUserCreation tar tre argument: req (request), res (response) och next.
+export const validateUserCreation = (req, res, next) => {
+
   const { username } = req.body;
-  //Destructuring används för att plocka ut username från req.body.
 
   if (!username || typeof username !== "string" || username.trim() === "") {
-    // Funktionen kontrollerar om username är giltigt (inte tomt, är en sträng, och inte bara mellanslag).
+
     return res.status(400).json({ error: "Invalid username" });
-    // Om username inte är giltigt: returnerar ett felmeddelande.
+
   }
 
-  next();
-  // Om username är giltigt: går vidare till nästa middleware eller funktion med next().
 };
 
-
-const validatePrice = (req, res, next) => {
+export const validatePrice = (req, res, next) => {
   const { id } = req.body;
-  const selectedProduct = menu.find((product) => product.id === id);
+  const selectedProduct = db.menu.find((product) => product.id === id);
 
   if (!selectedProduct) {
     return res.status(404).send("The requested product could not be found");
@@ -28,6 +24,10 @@ const validatePrice = (req, res, next) => {
     return res.status(400).send("Invalid product price");
   }
 
-  next();
 };
-export { validateUserCreation, validatePrice };
+
+export const validateProduct = (product) => {
+  const requiredFields = ['id', 'title', 'desc', 'price'];
+  const keys = Object.keys(product);
+  return requiredFields.every(field => keys.includes(field));
+};
