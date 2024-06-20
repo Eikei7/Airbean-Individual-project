@@ -1,11 +1,10 @@
 import express from 'express';
 import nedb from 'nedb-promise';
 import session from 'express-session';
-import { validatePrice } from '../middlewares/validation.js';
 import db from '../database/db.js';
 
 const router = express.Router();
-const cart = new nedb({ filename: './database/cart.db', autoload: true });
+const cart = new nedb({ filename: '../database/cart.db', autoload: true });
 
 router.use(
   session({
@@ -25,7 +24,7 @@ router.use((req, res, next) => {
 });
 
 // Middleware to validate user price
-const validatePriceMiddleware = async (req, res, next) => {
+const validatePrice = async (req, res, next) => {
   try {
     const { id } = req.body;
     const selectedProduct = await db.menu.findOne({ id });
@@ -46,7 +45,7 @@ const validatePriceMiddleware = async (req, res, next) => {
 };
 
 // User can order
-router.post('/', validatePriceMiddleware, async (req, res) => {
+router.post('/', validatePrice, async (req, res) => {
   try {
     const { selectedProduct } = req;
 
