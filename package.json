@@ -1,7 +1,7 @@
 {
   "name": "airbean-gruppexamination",
   "version": "1.0.0",
-  "description": "Gruppexamination i kursen Backend med Node.js",
+  "description": "Individual project showing backend in Node.js",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -23,6 +23,6 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.2"
+    "nodemon": "^3.1.3"
   }
 }
