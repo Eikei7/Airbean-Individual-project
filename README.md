@@ -21,7 +21,41 @@
 | Request       | Route           | Result |
 | ----------------- |:-----------------:| ----------:|
 | POST | /admin/login      |    Login as admin |
+
+> [!Note]
+> {"username":"erik","password":"password123"}
+> 
+> You will have a token returned, which is to be used later when adding, modifying or deleting products.
+
+| Request       | Route           | Result |
+| ----------------- |:-----------------:| ----------:|
 | POST | /menu      |    Add product to menu |
+
+> [!Note]
+> {"id":20,"title":"Kokhett kaffe","desc":"Varmt!","price":30}
+> 
+> Before making the POST request, add the token from your login result as a header. Name: "Authorization", Value: [token]
+
+| Request       | Route           | Result |
+| ----------------- |:-----------------:| ----------:|
 | PUT | /menu/:id      |    Modify product in menu |
+
+> [!Note]
+> More to be
+> added
+
+| Request       | Route           | Result |
+| ----------------- |:-----------------:| ----------:|
 | DELETE | /menu/:id      |    Remove product from menu |
+
+> [!Note]
+> More to be
+> added
+
+| Request       | Route           | Result |
+| ----------------- |:-----------------:| ----------:|
 | POST | /campaign      |    Add products to campaign |
+
+> [!Note]
+> More to be
+> added
