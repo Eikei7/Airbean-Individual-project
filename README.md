@@ -21,4 +21,6 @@
 | Request       | Route           | Result |
 | ----------------- |:-----------------:| ----------:|
 | POST | /menu      |    Add product to menu |
+| PUT | /menu/:id      |    Modify product in menu |
 | DELETE | /menu/:id      |    Remove product from menu |
+| POST | /campaign      |    Add products to campaign |
