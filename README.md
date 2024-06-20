@@ -20,6 +20,7 @@
 ## Admin requests:
 | Request       | Route           | Result |
 | ----------------- |:-----------------:| ----------:|
+| POST | /admin/login      |    Login as admin |
 | POST | /menu      |    Add product to menu |
 | PUT | /menu/:id      |    Modify product in menu |
 | DELETE | /menu/:id      |    Remove product from menu |
