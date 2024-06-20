@@ -4,7 +4,7 @@ import db from '../database/db.js';
 import { validateProduct } from '../middlewares/validation.js';
 
 const router = Router();
-
+// Middleware to format date
 const formatDate = (date) => {
   const pad = (number) => number.toString().padStart(2, '0');
 
