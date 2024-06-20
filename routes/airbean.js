@@ -1,13 +1,17 @@
-import express, { Router } from "express";
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
-import bodyParser from "body-parser";
-import session from "express-session"; // for handling user sessions - login status
-import homeRouter from "./home.js";
-import aboutRouter from "./about.js";
+import campaignRouter from './campaign.js'
+import express, { Router } from 'express'
+import menuRouter from './menuRoutes.js'
+import session from 'express-session'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import bodyParser from 'body-parser'
+import aboutRouter from "./about.js"
 import orderRouter from './order.js'
+import adminRouter from './admin.js'
 import cartRouter from './cart.js'
 import authRouter from './auth.js'
+import homeRouter from './home.js'
+
 
 import sessionMiddleware from "../middlewares/session.js";
 
@@ -37,6 +41,10 @@ router.use('/about', aboutRouter)
 router.use('/order', orderRouter)
 router.use('/cart', cartRouter)
 router.use('/account', authRouter)
+router.use('/menu', menuRouter)
+router.use('/admin', adminRouter)
+router.use('/campaign', campaignRouter)
+
 
 
 export default router;

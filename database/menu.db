@@ -1,0 +1,15 @@
+{"id":1,"title":"Cortado","desc":"En cortado med lika delar espresso och varm mjölk.","price":33,"_id":"0Gu3mPAbONk1hy4P"}
+{"id":2,"title":"Flat White","desc":"En platt vit med silkeslen mikroskum och stark espresso.","price":46,"_id":"3IBqddqDtbAtIi2E"}
+{"id":3,"title":"Mocha","desc":"En söt mocha med choklad och espresso.","price":55,"_id":"6ymMjHWMpLGChmJ6"}
+{"id":4,"title":"Kallt kaffe","desc":"Bryggd på månadens bönor.","price":9,"createdAt":"2024-06-16 20:36:49","_id":"D04gXbi9CzvHBUqC"}
+{"id":11,"title":"Jordgubbs-latte","desc":"Mums!","price":55,"createdAt":"20240620-17:02","_id":"KcrGDWXmRVQXdudM"}
+{"id":5,"title":"Espresso","desc":"En stark och aromatisk enkel espresso.","price":25,"_id":"QnMf8p1P9ZF9Oerm"}
+{"id":6,"title":"Americano","desc":"En espresso utspädd med varmt vatten.","price":35,"_id":"SjwGh9EVaYWtIzs7"}
+{"id":17,"title":"Sovande kaffebönor","desc":"Försök väcka dem!","price":45,"createdAt":"2024-06-20 18:31","_id":"URybsSoN9ynreBxR"}
+{"id":14,"title":"Ljummet kaffe","desc":"Inte kall","price":20,"createdAt":{"$$date":1718825051451},"_id":"WW6VtTUuN4FpYesV","modifiedAt":"2024-06-20 17:59"}
+{"id":7,"title":"Bryggkaffe","desc":"Bryggd på månadens bönor.","price":39,"_id":"XxbJYtuWvSY6xPu0"}
+{"id":12,"title":"Korv-latte","desc":"Mums?","price":55,"createdAt":"2024-06-20 17:04","_id":"YrifwGuf0VRm373b"}
+{"id":8,"title":"Latte","desc":"En len latte med perfekt balanserad mjölk och espresso.","price":49,"_id":"ZVjipnljyz05sa1O"}
+{"id":13,"title":"Cold Brew","desc":"Kallbryggt kaffe för en uppfriskande smakupplevelse.","price":42,"_id":"lN2tmDgmhBl1Mc6k"}
+{"id":16,"title":"Hoppande kaffebönor","desc":"Försök fånga dem!","price":45,"createdAt":"2024-06-20 17:56","_id":"qqLiQZEpe2Zh7KXQ"}
+{"id":10,"title":"Banansmoothie-kaffe","desc":"Gjord på banan, duh","price":55,"createdAt":{"$$date":1718895532334},"_id":"yFGin1j55BwapOko"}

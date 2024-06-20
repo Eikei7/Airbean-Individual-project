@@ -1,71 +1,78 @@
-import express from 'express';
+import { Router } from 'express';
+import isAdmin from '../middlewares/authAdmin.js';
+import db from '../database/db.js';
 import { validateProduct } from '../middlewares/validation.js';
-import { addProduct, getProductById, updateProduct, removeProduct, getAllProducts } from '../models/productModel.js';
 
-const router = express.Router();
+const router = Router();
+// Middleware to format date
+const formatDate = (date) => {
+  const pad = (number) => number.toString().padStart(2, '0');
 
-// Helper function to remove _id field
-const removeIdField = (products) => {
-  return products.map(product => {
-    const { _id, ...rest } = product;
-    return rest;
-  });
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
-// Add a new product to the menu
-router.post('/menu', validateProduct, (req, res) => {
-  const { id, title, desc, price } = req.body;
+// POST Add new menu item
+router.post('/', isAdmin, async (req, res) => {
+  const product = req.body;
 
-  // Create the new product with the current date and time
-  const newProduct = { id, title, desc, price, createdAt: new Date().toLocaleDateString() };
+  if (!validateProduct(product)) {
+    return res.status(400).json({ message: 'Invalid product properties' });
+  }
 
-  addProduct(newProduct, (err, product) => {
-    if (err) {
-      return res.status(500).send('Failed to add product');
-    }
-    getAllProducts((err, products) => {
-      if (err) {
-        return res.status(500).send('Failed to retrieve products');
-      }
-      res.status(201).json(removeIdField(products));
-    });
-  });
+  product.createdAt = formatDate(new Date());
+
+  try {
+    const newDoc = await db.menu.insert(product);
+    res.status(201).json(newDoc);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to add product' });
+  }
 });
 
-// Update an existing product in the menu
-router.post('/menu/update', validateProduct, (req, res) => {
-  const { id, title, desc, price } = req.body;
+// PUT Modify menu item
+router.put('/:id', isAdmin, async (req, res) => {
+  const productId = req.params.id;
+  const updatedProduct = req.body;
 
-  getProductById(id, (err, product) => {
-    if (err || !product) {
-      return res.status(404).send('Product not found');
+  if (!validateProduct(updatedProduct)) {
+    return res.status(400).json({ message: 'Invalid product properties' });
+  }
+
+  updatedProduct.modifiedAt = formatDate(new Date());
+  delete updatedProduct._id; // Remove _id from updatedProduct
+
+  try {
+    const numReplaced = await db.menu.update({ id: parseInt(productId, 10) }, { $set: updatedProduct });
+    if (numReplaced === 0) {
+      res.status(404).json({ message: 'Product not found' });
+    } else {
+      res.status(200).json({ message: 'Product modified', numReplaced });
     }
-
-    const updates = { title, desc, price, modifiedAt: new Date().toLocaleDateString() };
-    updateProduct(id, updates, (err, numAffected) => {
-      if (err) {
-        return res.status(500).send('Failed to update product');
-      }
-      res.status(200).json({ ...product, ...updates, _id: undefined });
-    });
-  });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to modify product' });
+  }
 });
 
-// Remove a product from the menu
-router.delete('/menu/:id', (req, res) => {
-  const { id } = req.params;
+// DELETE menu item
+router.delete('/:id', isAdmin, async (req, res) => {
+  const productId = req.params.id;
 
-  removeProduct(id, (err, numRemoved) => {
-    if (err || numRemoved === 0) {
-      return res.status(404).send('Product not found');
+  try {
+    const numRemoved = await db.menu.remove({ id: parseInt(productId, 10) });
+    if (numRemoved === 0) {
+      res.status(404).json({ message: 'Product not found' });
+    } else {
+      res.status(200).json({ message: 'Product deleted', numRemoved });
     }
-    getAllProducts((err, products) => {
-      if (err) {
-        return res.status(500).send('Failed to retrieve products');
-      }
-      res.status(200).json(removeIdField(products));
-    });
-  });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete product' });
+  }
 });
 
 export default router;

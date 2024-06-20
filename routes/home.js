@@ -1,10 +1,9 @@
-import express from 'express';
+import express from 'express'
 
-const router = express.Router();
+const router = express.Router()
 
-// Example route
-router.get("/start", (req, res) => {
-    res.send("Welcome to Airbean!"); // Sending a plain text response
+router.get("/", (req, res) => {
+  res.send("Welcome to Airbean!")
 });
 
-export default router;
+  export default router;
