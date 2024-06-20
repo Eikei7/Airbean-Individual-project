@@ -9,7 +9,12 @@ import db from '../database/db.js';
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const orders = new nedb({ filename: path.join(__dirname, '../database/orders.db'), autoload: true });
+
+// Initialize NeDB for orders
+const orders = new nedb({
+  filename: path.join(__dirname, '../database/orders.db'),
+  autoload: true,
+});
 
 router.use(
   session({
@@ -20,7 +25,7 @@ router.use(
   })
 );
 
-// Middleware to make session variables accessible
+// Middleware to initialize session variables
 router.use((req, res, next) => {
   if (typeof req.session.isOnline === 'undefined') {
     req.session.isOnline = false;
@@ -33,7 +38,7 @@ router.get('/', async (req, res) => {
   try {
     const menuItems = await db.menu.find({}); // Fetch all items from the menu database
 
-    // Map and format the menu items for display
+    // Format the menu items for display
     const coffeeMenu = menuItems.map((item) => ({
       id: item.id,
       title: item.title,
@@ -45,6 +50,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).json(coffeeMenu); // Send the menu items as a JSON response
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Failed to fetch menu items' });
   }
 });
@@ -53,7 +59,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const currentUserCart = await cart.find({
-      userId: req.session.currentUser ? req.session.currentUser : 'guest',
+      userId: req.session.currentUser || 'guest',
     });
 
     // Check if the cart is empty
@@ -77,7 +83,7 @@ router.post('/', async (req, res) => {
     // Clear the cart for the current user
     await cart.remove({ userId: req.session.currentUser || 'guest' }, { multi: true });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 });
@@ -101,10 +107,10 @@ router.get('/:orderId', async (req, res) => {
       `<p>Order confirmation</p><ul>${items}</ul><p>Estimated delivery time: ${estimatedDeliveryTime}</p>`
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 });
 
-export { orders };
+export { orders }; // Exporting orders for testing purposes or future extensions
 export default router;
