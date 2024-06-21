@@ -41,21 +41,21 @@
 | PUT | /menu/:id      |    Modify product in menu |
 
 > [!Note]
-> More to be
-> added
+> Just like when adding a product, you add the token from the login result as header. Name: "Authorization", Value: [token]
 
 | Request       | Route           | Result |
 | ----------------- |:-----------------:| ----------:|
 | DELETE | /menu/:id      |    Remove product from menu |
 
 > [!Note]
-> More to be
-> added
+> Just like when adding a product, you add the token from the login result as header. Name: "Authorization", Value: [token]
 
 | Request       | Route           | Result |
 | ----------------- |:-----------------:| ----------:|
 | POST | /campaign      |    Add products to campaign |
 
 > [!Note]
-> More to be
-> added
+> Put two product ID's after each other in your request, and also the new total price.
+> 
+> { "products": ["XxbJYtuWvSY6xPu0", "qqLiQZEpe2Zh7KXQ"],
+>	"price": 70 }
